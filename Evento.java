@@ -24,10 +24,19 @@ public class Evento {
      */                 
     public Evento(String nombre, String fecha, String horaInicio,
     String horaFin) {
-         
-    }
+        StringBuilder sb = new StringBuilder(nombre);
+        for(int i = 0; i < nombre.length(); i++){
+            Character car = nombre.charAt(i);
+            if(car.equals(" ")){
+                sb.deleteCharAt(i);
+            }
+        }
+        this.nombre = sb.toString();
+        this.fecha = this.fecha.parse(fecha, formateadorFecha);
+        this.horaInicio = this.horaInicio.parse(horaInicio);
+        this.horaFin = this.horaFin.parse(horaFin);
 
-   
+    }
 
     /**
      * accesor para el nombre del evento
@@ -121,7 +130,6 @@ public class Evento {
 
     }
 
-  
     /**
      * representación textual del evento  
      */
