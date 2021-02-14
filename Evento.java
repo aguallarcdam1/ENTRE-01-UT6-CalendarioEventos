@@ -2,7 +2,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-
+import java.time.DayOfWeek;
+import java.time.Month;
 /**
  * Representa a un evento del calendario
  * 
@@ -24,16 +25,23 @@ public class Evento {
      */                 
     public Evento(String nombre, String fecha, String horaInicio,
     String horaFin) {
-        StringBuilder sb = new StringBuilder(nombre);
-        for(int i = 0; i < nombre.length(); i++){
-            Character car = nombre.charAt(i);
-            if(car.equals(" ")){
-                sb.deleteCharAt(i);
+        this.nombre = "";
+        nombre = nombre.trim();
+        String[] palabras = nombre.split(" ");
+
+        for(int i = 0; i < palabras.length; i++){
+            if(!palabras[i].equals("")){
+                String primeraLetra = (palabras[i].substring(0,1)).toUpperCase();
+                String restoPalabra = palabras[i].substring(1);
+                this.nombre += primeraLetra + restoPalabra + " ";
             }
         }
-        this.nombre = sb.toString();
+        this.nombre = this.nombre.trim();
+
         this.fecha = this.fecha.parse(fecha, formateadorFecha);
+
         this.horaInicio = this.horaInicio.parse(horaInicio);
+
         this.horaFin = this.horaFin.parse(horaFin);
 
     }
@@ -99,7 +107,8 @@ public class Evento {
      * que se obtendrá a partir de la fecha del evento
      */
     public int getDia() {
-        return 0;
+        DayOfWeek diaDeLaSemana = fecha.getDayOfWeek();
+        return diaDeLaSemana.getValue();
     }
 
     /**
@@ -107,6 +116,13 @@ public class Evento {
      * que se obtendrá a partir de la fecha del evento
      */
     public Mes getMes() {
+        int mes = fecha.getMonthValue();
+        Mes[] meses = Mes.values();
+        for (int i = 0; i < meses.length; i++) {
+            if(i == mes - 1){
+                return meses[i];
+            }
+        }
         return null;
     }
 
@@ -114,6 +130,8 @@ public class Evento {
      * calcula y devuelve la duración del evento en minutos
      */
     public int getDuracion() {
+
+        int duracion = 0;
         return 0;
 
     }
