@@ -2,8 +2,8 @@
 /**
  * Enumeration class Mes - write a description of the enum class here
  * 
- * @author (your name here)
- * @version (version number or date here)
+ * @author (Andrés Guallar Chamorro)
+ * @version (15/02/2021)
  */
 public enum Mes
 {

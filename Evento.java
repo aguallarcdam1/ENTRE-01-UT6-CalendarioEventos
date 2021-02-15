@@ -6,7 +6,8 @@ import java.time.DayOfWeek;
 import java.time.Month;
 /**
  * Representa a un evento del calendario
- * 
+ * @author - (Andrés Guallar Chamorro)
+ * @version (15/02/2021)
  */
 public class Evento {
     private String nombre;
@@ -130,9 +131,13 @@ public class Evento {
      * calcula y devuelve la duración del evento en minutos
      */
     public int getDuracion() {
-
-        int duracion = 0;
-        return 0;
+        int duracion = ((horaFin.getHour() * 60) + horaFin.getMinute()) - ((horaInicio.getHour() * 60) + horaInicio.getMinute());
+        if(duracion < 0){
+            return duracion * (- 1);
+        }
+        else{
+        return duracion;
+    }
 
     }
 
@@ -144,7 +149,12 @@ public class Evento {
      * Pista! usa un objeto LocalDateTime
      */
     public boolean antesDe(Evento otro) {
-        return true;
+        LocalDateTime evento1 = null;
+        evento1 = evento1.parse(fecha.toString() + "T" + horaInicio.toString());
+        
+        LocalDateTime evento2 = null;
+        evento2 = evento2.parse(otro.getFecha().toString() + "T" + otro.getHoraInicio().toString());
+        return evento1.isBefore(evento2);
 
     }
 
