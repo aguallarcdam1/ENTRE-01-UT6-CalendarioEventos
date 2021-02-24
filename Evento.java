@@ -38,12 +38,12 @@ public class Evento {
             }
         }
         this.nombre = this.nombre.trim();
+        
+        this.fecha = this.fecha.parse(fecha.trim(), formateadorFecha);
 
-        this.fecha = this.fecha.parse(fecha, formateadorFecha);
+        this.horaInicio = this.horaInicio.parse(horaInicio.trim());
 
-        this.horaInicio = this.horaInicio.parse(horaInicio);
-
-        this.horaFin = this.horaFin.parse(horaFin);
+        this.horaFin = this.horaFin.parse(horaFin.trim());
 
     }
 
