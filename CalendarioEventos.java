@@ -4,6 +4,7 @@ import java.util.TreeSet;
 import java.util.Arrays;
 import java.util.Set; 
 import java.util.Map;
+import java.util.Iterator;
 /**
  * Esta clase modela un sencillo calendario de eventos.
  * 
@@ -45,19 +46,37 @@ public class CalendarioEventos {
 
         if(!calendario.containsKey(clave)){
             ArrayList<Evento> value = new ArrayList<>();
-            value.add(nuevo);
+            value.add(0, nuevo);
             calendario.put(clave, value);
         }
+
         else{
             ArrayList<Evento> value = calendario.get(clave);
-            for(Evento evento : value){
-                if(evento.antesDe(nuevo)){
-                    value.add(value.indexOf(evento), nuevo);
+            boolean añadido = false;
+            
+            for(int i = 0; añadido == false && i < value.size(); i++){
+                if(nuevo.antesDe(value.get(i))){
+                    añadido = true;
+                    calendario.get(clave).add(value.indexOf(value.get(i)), nuevo);
+                    
                 }
             }
+            
+            if(añadido == false){
+                calendario.get(clave).add(value.size(), nuevo);
+            }
+
+            // Iterator<Evento> it = value.iterator();
+            // boolean mov = false;
+            // while(it.hasNext()){
+            // Evento evento = it.next();
+            // if(nuevo.antesDe(evento) || mov == false){
+            // mov = true;
+            // calendario.get(clave).add(value.indexOf(evento), nuevo);
+            // }
+            // }
         }
     }
-
 
     /**
      * Representación textual del calendario
@@ -68,9 +87,12 @@ public class CalendarioEventos {
         String str = "";
         Set<Map.Entry<Mes, ArrayList<Evento>>> entradas = calendario.entrySet();
         for(Map.Entry<Mes, ArrayList<Evento>> entrada : entradas){
-           str += entrada.getValue().toString() 
-                        + "\n--------------------------------";
-                        
+            str += "\n" + entrada.getKey() + "\n";
+
+            for(Evento evento : entrada.getValue()){
+                str += evento.toString() + "\n"; 
+            }
+
         }
         return str;
     }
