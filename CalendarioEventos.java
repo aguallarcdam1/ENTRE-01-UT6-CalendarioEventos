@@ -53,28 +53,18 @@ public class CalendarioEventos {
         else{
             ArrayList<Evento> value = calendario.get(clave);
             boolean añadido = false;
-            
+
             for(int i = 0; añadido == false && i < value.size(); i++){
                 if(nuevo.antesDe(value.get(i))){
                     añadido = true;
                     calendario.get(clave).add(value.indexOf(value.get(i)), nuevo);
-                    
+
                 }
             }
-            
+
             if(añadido == false){
                 calendario.get(clave).add(value.size(), nuevo);
             }
-
-            // Iterator<Evento> it = value.iterator();
-            // boolean mov = false;
-            // while(it.hasNext()){
-            // Evento evento = it.next();
-            // if(nuevo.antesDe(evento) || mov == false){
-            // mov = true;
-            // calendario.get(clave).add(value.indexOf(evento), nuevo);
-            // }
-            // }
         }
     }
 
@@ -115,8 +105,38 @@ public class CalendarioEventos {
      *  
      */
     public TreeSet<Mes> mesesConMasEventos() {
+        TreeSet<Mes> conjunto = new TreeSet<>();
 
-        return null;
+        int maxPrimera = -1;
+        int maxSegunda = -1;
+        Mes mesMaxPrimero = null;
+        Mes mesMaxSegundo = null;
+
+        Set<Map.Entry<Mes, ArrayList<Evento>>> entradas = calendario.entrySet();
+        Iterator<Map.Entry<Mes, ArrayList<Evento>>> it =  entradas.iterator();
+
+        while(it.hasNext()){
+            Map.Entry<Mes, ArrayList<Evento>> entrada = it.next();
+            ArrayList<Evento> valor =  entrada.getValue();
+            int cantidad = valor.size();
+            if(cantidad > maxPrimera){
+                maxSegunda = maxPrimera;
+                maxPrimera = cantidad;
+                mesMaxPrimero = entrada.getKey();
+            }
+            else if(cantidad > maxSegunda){
+                maxSegunda = cantidad;
+                mesMaxSegundo = entrada.getKey();
+            }
+        }
+
+        if(calendario.size() == 1){
+            conjunto.add(calendario.firstKey());
+            return conjunto;
+        }
+        conjunto.add(mesMaxPrimero);
+        conjunto.add(mesMaxSegundo);
+        return conjunto;
     }
 
     /**
@@ -124,8 +144,21 @@ public class CalendarioEventos {
      * Se devuelve uno solo (el primero encontrado) aunque haya varios
      */
     public String eventoMasLargo() {
+        String evMasAlto = "";
+        int duracionMasAlta = -1;
+        Set<Mes> meses = calendario.keySet();
 
-        return null;
+        for(Mes mes : meses){
+            ArrayList<Evento> eventos =  calendario.get(mes);
+            for(Evento evento : eventos){
+                int dur = evento.getDuracion();
+                if(dur > duracionMasAlta){
+                    duracionMasAlta = dur;
+                    evMasAlto = evento.getNombre();
+                }
+            }
+        }
+        return evMasAlto;
     }
 
     /**
@@ -138,8 +171,31 @@ public class CalendarioEventos {
      * completa del map
      */
     public int cancelarEventos(Mes[] meses, int dia) {
+        int cantidadBorrados = 0;
 
-        return 0;
+        Set<Map.Entry<Mes, ArrayList<Evento>>> entradas = calendario.entrySet();
+        Iterator<Map.Entry<Mes, ArrayList<Evento>>> it =  entradas.iterator();
+
+        while(it.hasNext()){
+            Map.Entry<Mes, ArrayList<Evento>> entrada = it.next();
+            for(Mes mes : meses){
+                if(entrada.getKey().equals(mes)){
+                    ArrayList<Evento> eventos =  calendario.get(mes);
+                    for(int i = 0; i < eventos.size(); i++){
+                        if(eventos.get(i).getDia() == dia){
+                            eventos.remove(eventos.get(i));
+                            cantidadBorrados ++;
+                            i--;
+                        }
+                    }
+                    if(eventos.isEmpty()){
+                        it.remove();
+                    }
+                }
+            }
+
+        }
+        return cantidadBorrados;
     }
 
     /**
