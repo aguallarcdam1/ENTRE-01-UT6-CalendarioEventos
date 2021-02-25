@@ -1,3 +1,6 @@
+package programacion.entregaut6.modelo;
+
+import programacion.entregaut6.io.CalendarioIO;
 import java.util.ArrayList;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -19,6 +22,7 @@ import java.util.Iterator;
  * 
  * Las claves se recuperan en orden alfabético
  * 
+ * @author (Andrés Guallar Chamorro)
  */
 public class CalendarioEventos {
     private TreeMap<Mes, ArrayList<Evento>> calendario;

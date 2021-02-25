@@ -1,3 +1,5 @@
+package programacion.entregaut6.modelo;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;

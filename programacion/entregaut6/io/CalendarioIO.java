@@ -1,3 +1,7 @@
+package programacion.entregaut6.io;
+
+import programacion.entregaut6.modelo.CalendarioEventos;
+import programacion.entregaut6.modelo.Evento;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
@@ -6,6 +10,8 @@ import java.util.Scanner;
  * La clase contiene un método estático que permite
  * cargar el calendario de eventos con los datos leídos desde
  * un fichero
+ * 
+ * @author (Andrés Guallar Chamorro)
  */
 public class CalendarioIO {
     
